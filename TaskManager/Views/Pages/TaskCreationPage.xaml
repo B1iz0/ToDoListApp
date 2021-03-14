@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="TaskManager.Views.Pages.TaskCreationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+      xmlns:system="clr-namespace:System;assembly=mscorlib"      
+      xmlns:local="clr-namespace:TaskManager.Views.Pages"
+      mc:Ignorable="d">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox Padding="10 0 0 0" Grid.Row="0" x:Name="TaskName" Height="50" FontSize="30" VerticalContentAlignment="Center" Text="{Binding TaskTitle, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="Uniform">
+                            <VisualBrush.Visual>
+                                <Label Content="Enter title..." Foreground="LightGray" Background="White">
+                                </Label>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static system:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <DatePicker Grid.Row="1" Height="50" FontSize="30" VerticalAlignment="Center" SelectedDate="{Binding TaskDeadline, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+        <TextBox Grid.Row="2" Padding="10 0 0 0" FontSize="30" TextWrapping="Wrap" Text="{Binding TaskDescription, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Row="3" Padding="10 0 0 0" FontSize="30" Margin="0 10 0 0" VerticalContentAlignment="Center" BorderBrush="{Binding TagsTextBoxColor}" Text="{Binding TaskTags, UpdateSourceTrigger=PropertyChanged}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction
+                            Command="{Binding CheckTagsForValidCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="Uniform">
+                            <VisualBrush.Visual>
+                                <Label Content="Enter tags..." Foreground="LightGray" Background="White">
+                                </Label>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static system:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <StackPanel Grid.Row="4" x:Name="importanceRadioButtons" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+            <RadioButton GroupName="Importance" VerticalContentAlignment="Center" Command="{Binding RadioButtonCheckedCommand}" CommandParameter="Immediate" Foreground="Red" FontSize="30" IsChecked="True" Content="Immediate"/>
+            <RadioButton GroupName="Importance" VerticalContentAlignment="Center" Command="{Binding RadioButtonCheckedCommand}" CommandParameter="Important" Foreground="Orange" Margin="10 0" FontSize="30" Content="Important" />
+            <RadioButton GroupName="Importance" VerticalContentAlignment="Center" Command="{Binding RadioButtonCheckedCommand}" CommandParameter="NonUrgent" Foreground="Green" FontSize="30" Content="NonUrgent" />
+        </StackPanel>
+        <Grid Grid.Row="5" Height="70">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" MaxWidth="150" MaxHeight="50" FontSize="20" Content="Back" Command="{Binding BackToMainPageCommand}"/>
+            <Button Grid.Column="1" MaxWidth="150" MaxHeight="50" FontSize="20" Background="LightGreen" Content="Create" Command="{Binding CreateNewTaskCommand}"/>
+        </Grid>
+    </Grid>
+</UserControl>

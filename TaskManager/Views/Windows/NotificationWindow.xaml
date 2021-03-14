@@ -1,0 +1,28 @@
+﻿<Window x:Class="TaskManager.Views.Windows.NotificationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskManager.Views.Windows"
+        mc:Ignorable="d"
+        Icon="C:\Users\mashk\source\repos\TaskManager\Images\logo.jpg"
+        Title="TaskManager" Height="125" Width="300"  >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Image Width="70" Source="C:\Users\mashk\source\repos\TaskManager\Images\logo.jpg"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <AccessText Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="LAST DAY LEFT"/>
+            <ListView Grid.Row="1" HorizontalContentAlignment="Center" ItemsSource="{Binding ChoosenTasks, UpdateSourceTrigger=PropertyChanged}">
+
+            </ListView>
+        </Grid>
+    </Grid>
+</Window>

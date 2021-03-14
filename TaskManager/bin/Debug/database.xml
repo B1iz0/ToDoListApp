@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<DataBase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Tasks>
+    <Task>
+      <Title>убраться в доме</Title>
+      <Deadline>2020-12-26T00:00:00</Deadline>
+      <Description>пропылесосить и убрать рабочий стол</Description>
+      <Importance>NonUrgent</Importance>
+      <Tags>
+        <string>#home</string>
+        <string>#clean</string>
+      </Tags>
+      <IsPerfomed>false</IsPerfomed>
+    </Task>
+    <Task>
+      <Title>подготовиться к экзамену по ЯП</Title>
+      <Deadline>2020-12-30T00:00:00</Deadline>
+      <Description>просмотреть вопросы билетов и просмотреть нужные лекции</Description>
+      <Importance>NonUrgent</Importance>
+      <Tags>
+        <string>#university</string>
+        <string>#work</string>
+        <string>#exams</string>
+      </Tags>
+      <IsPerfomed>false</IsPerfomed>
+    </Task>
+    <Task>
+      <Title>выполнить курсовую работу</Title>
+      <Deadline>2020-12-21T00:00:00+03:00</Deadline>
+      <Description>создать лучший Task Manager</Description>
+      <Importance>NonUrgent</Importance>
+      <Tags>
+        <string>#exams</string>
+        <string>#university</string>
+        <string>#work</string>
+      </Tags>
+      <IsPerfomed>false</IsPerfomed>
+    </Task>
+    <Task>
+      <Title>воспользоваться купоном на пиццу</Title>
+      <Deadline>2020-12-21T00:00:00</Deadline>
+      <Description>сходить в пиццерию "DoDoPizza"  воспользоваться купоном на скидку</Description>
+      <Importance>NonUrgent</Importance>
+      <Tags>
+        <string>#relax</string>
+        <string>#freetime</string>
+        <string>#pizza</string>
+      </Tags>
+      <IsPerfomed>true</IsPerfomed>
+    </Task>
+    <Task>
+      <Title>подготовиться к зачету</Title>
+      <Deadline>2020-12-21T00:00:00</Deadline>
+      <Description />
+      <Importance>NonUrgent</Importance>
+      <Tags>
+        <string>#university</string>
+      </Tags>
+      <IsPerfomed>false</IsPerfomed>
+    </Task>
+  </Tasks>
+</DataBase>

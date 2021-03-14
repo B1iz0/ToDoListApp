@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="TaskManager.Views.Pages.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:system="clr-namespace:System;assembly=mscorlib"      
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+      xmlns:vm="clr-namespace:TaskManager.ViewModels"
+      xmlns:cmd="clr-namespace:TaskManager.Infastructure.Commands"
+      xmlns:local="clr-namespace:TaskManager.Views.Pages"
+      mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="ListViewItem">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsExpired}"
+                        Value="True">
+                    <Setter Property="Foreground" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <AccessText HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="20" Grid.Column="0">Sort by:</AccessText>
+            <ComboBox Grid.Column="1" VerticalContentAlignment="Center" SelectedIndex="{Binding SelectedSortFilter}" MinWidth="300" Margin="10 5 0 5" MaxHeight="50" FontSize="20" Name="sortList">
+                <TextBlock>Title</TextBlock>
+                <TextBlock>Deadline</TextBlock>
+                <TextBlock>Importance</TextBlock>
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image Grid.Column="0" MaxHeight="40" MaxWidth="40" Source="C:\Users\mashk\source\repos\TaskManager\Images\search.png"/>
+            <TextBox Grid.Column="1" Padding="9 0 0 0" Margin="10 0 0 0" FontSize="30" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Style.Resources>
+                            <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="Uniform">
+                                <VisualBrush.Visual>
+                                    <Label Content="search by title or tags" Foreground="LightGray" Background="White">
+                                    </Label>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Style.Resources>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="{x:Static system:String.Empty}">
+                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                            </Trigger>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+        </Grid>
+        <ListView x:Name="Tasks" Grid.Row="2" Margin="0 10 0 0" SelectedItem="{Binding SelectedTask}" ItemsSource="{Binding TasksCollection, UpdateSourceTrigger=PropertyChanged}" FontSize="30" MouseDoubleClick="ListBox_MouseDoubleClick">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Title}"/>
+                        <TextBlock Margin="20 0 0 0" FontSize="20" VerticalAlignment="Center" Text="{Binding DeadlineFormater}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <AccessText HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Margin="5 5" FontSize="20">Perfomed tasks:</AccessText>
+        <ListBox x:Name="PerfomedTasks" Grid.Row="4" Margin="0 10 0 0" FontSize="30" SelectedItem="{Binding SelectedPerfomedTask}" ItemsSource="{Binding PerfomedTasks, UpdateSourceTrigger=PropertyChanged}" LostFocus="PerfomedTasks_LostFocus" MouseDoubleClick="PerfomedTasks_MouseDoubleClick">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Foreground="Green" Text="{Binding Title}" TextDecorations="Strikethrough"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" MinWidth="150" MaxHeight="50" FontSize="20" Content="Perform" Background="LightGreen" HorizontalAlignment="Left" Visibility="{Binding IsVisiblePerform}" Command="{Binding ToPerformTaskCommand}"/>
+            <Border Grid.Column="2" CornerRadius="15" Height="75" Width="75" HorizontalAlignment="Right">
+                <Button Height="60" Width="60" BorderThickness="0"  Background="White" BorderBrush="White" Command="{Binding ToCreateTaskCommand}">
+                    <Image Source="C:\Users\mashk\source\repos\TaskManager\Images\add.png" Height="57" Width="57"/>
+                </Button>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

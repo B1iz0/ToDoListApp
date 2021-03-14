@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="TaskManager.Views.Pages.TaskInformationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+      xmlns:vm="clr-namespace:TaskManager.ViewModels"
+      xmlns:local="clr-namespace:TaskManager.Views.Pages"
+      mc:Ignorable="d">
+    
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox Grid.Row="0" x:Name="TaskName" Height="50" FontSize="30" VerticalAlignment="Center" IsEnabled="{Binding IsEnableTitle}" Text="{Binding TaskTitle, UpdateSourceTrigger=PropertyChanged}"/>
+        <DatePicker Grid.Row="1" Height="50" FontSize="30" VerticalAlignment="Center" IsEnabled="{Binding IsEnableDeadline}" SelectedDate="{Binding Deadline, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+        <TextBox Grid.Row="2" FontSize="30" TextWrapping="Wrap" IsEnabled="{Binding IsEnableDescription}" Text="{Binding TaskDescription, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Grid.Row="3" FontSize="30" IsEnabled="{Binding IsEnableTags}" Margin="0 10 0 0" VerticalContentAlignment="Center" BorderBrush="{Binding TagsTextBoxColor}" Text="{Binding TaskTags, UpdateSourceTrigger=PropertyChanged}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction
+                            Command="{Binding CheckTagsForValidCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <StackPanel Grid.Row="4" x:Name="importanceRadioButtons" VerticalAlignment="Center" IsEnabled="{Binding IsEnableImportance}" HorizontalAlignment="Center" Orientation="Horizontal">
+            <RadioButton GroupName="Importance" VerticalContentAlignment="Center" Foreground="Red" FontSize="30" IsChecked="{Binding IsCheckedImmediate}" Content="Immediate"/>
+            <RadioButton GroupName="Importance" VerticalContentAlignment="Center" Foreground="Orange" Margin="10 0" FontSize="30" IsChecked="{Binding IsCheckedImportant}" Content="Important" />
+            <RadioButton GroupName="Importance" VerticalContentAlignment="Center" Foreground="Green" FontSize="30" IsChecked="{Binding IsCheckedNonUrgent}" Content="NonUrgent" />
+        </StackPanel>
+        <Grid Grid.Row="5" Height="70">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" MaxWidth="150" MaxHeight="50" FontSize="20" Content="Back" Command="{Binding BackToMainPageCommand}"/>
+            <Button Grid.Column="1" MaxWidth="150" MaxHeight="50" Background="Red" FontSize="20" Content="Delete" Command="{Binding DeleteTaskCommand}"/>
+            <CheckBox Grid.Column="2" MaxWidth="150" MaxHeight="50" FontSize="20" Content="Perform again" IsEnabled="{Binding IsEnablePerformAgain, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding IsCheckedPerformAgain}"/>
+            <Button Grid.Column="3" MaxWidth="150" MaxHeight="50" FontSize="20" Visibility="{Binding ChangeButtonVisibility}" Content="Change" Background="LightGreen" Command="{Binding ChangeInformationCommand}"/>
+            <Button Grid.Column="3" MaxWidth="150" MaxHeight="50" FontSize="20" Visibility="{Binding SaveButtonVisibility}" Content="Save" Background="LightGreen" Command="{Binding SaveChangesCommand}"/>
+
+        </Grid>
+    </Grid>
+</UserControl>
